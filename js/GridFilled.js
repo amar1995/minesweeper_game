@@ -1,0 +1,122 @@
+// const GridFilling = require('./GridFilling');
+const GridFilled = function () {
+    var gridRevealed;
+    var row,column,level,numberOfMines;
+    var visited;
+    var isGridTraversalComplete = 0;
+    /* position in grid to do bfs
+       left, right,up, down */
+    var pos = [[-1,0],[1,0],[0,-1],[0,1]];
+    var gameFactory = GridFilling();
+    function create(rows,columns,levels,mines=0) {
+        row=rows;
+        column=columns;
+        level=levels;
+        numberOfMines = mines;
+        makeGrid();
+        gridRevealed = new Array(row);
+        visited = new Array(row);
+        for(var i=0; i<row; i++) {
+            gridRevealed[i] = new Array(column);
+            visited[i] = new Array(column);
+        }
+        for(var i=0; i<row; i++) {
+            for(var j=0; j<column; j++) {
+                gridRevealed[i][j]=-1;
+                visited[i][j]=false;
+            }
+        }
+    }
+    function makeGrid() {
+        if(level === "easy")
+        gameFactory.createObject(row,column,Math.max(row,column));
+        else if(level === "medium")
+        gameFactory.createObject(row,column,Math.floor((row*column)/2));
+        else if(level === "hard")
+        gameFactory.createObject(row,column,Math.ceil((row*column)/2) + Math.max(row,column));
+        else if(level === "custom")
+        gameFactory.createObject(row,column,numberOfMines);
+    }
+    // used stack as order doesn't matter in this traversal
+    function bfs(i,j) {
+        var stack = [];
+        var ans = [];
+        stack.push([i,j]);
+        ans.push([i,j,gameFactory.getGridAtIndex(i,j)]);
+        visited[i][j]=true;
+        gridRevealed[i][j] = gameFactory.getGridAtIndex(i,j);
+        if(gameFactory.getGridAtIndex(i,j) !== 0) 
+        {
+            stack.pop();
+            return ans;
+        }
+        while(stack.length !== 0 ) {
+            var temp = stack.pop();
+            var x = temp[0], y = temp[1];
+            // console.log(temp);  
+            for(var k=0;k<4;k++) {
+                var l = x+pos[k][0];
+                var m = y+pos[k][1];
+                if(l>=0 && l<row && m>=0 && m<column) {
+                    // console.log([l,m,arr[l][m]])
+                    if(gameFactory.getGridAtIndex(l,m) !== -1) {  
+                        if(visited[l][m] === false) {
+                            visited[l][m]=true;
+                            if(gameFactory.getGridAtIndex(l,m) === 0)
+                            stack.push([l,m]);
+                            ans.push([l,m]);
+                            gridRevealed[l][m]=gameFactory.getGridAtIndex(l,m);
+                        }
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+    function addFlag(i,j) {
+        isGridTraversalComplete += 1;
+        gridRevealed[i][j]=9;
+    }
+    function removeFlag(i,j) {
+        isGridTraversalComplete -=1;
+        gridRevealed[i][j]=-1;
+    }
+    function revealGrid(i,j) {
+        const arr = bfs(i,j);
+        isGridTraversalComplete += arr.length; 
+        return arr;
+    }
+    // for(var i=0;i<row;i++) {
+    // var flag = false;
+    // for(var j=0;j<column;j++) {
+    //     if(gameFactory.getGridAtIndex(i,j) === 0)
+    //      {
+    //          flag=true;
+    //          bfs(i,j);
+    //          break;
+    //      }
+    // }
+    // if(flag) break;
+    // }
+    return {
+        createObject: create,
+        getRow: function() {
+            return row;
+        },
+        getColumn: function() {
+            return column;
+        },
+        getValueOfOriginalGrid: function(i,j) {
+            return gameFactory.getGridAtIndex(i,j);
+        },
+        getValueOfSeenGrid: function(i,j) {
+            return gridRevealed[i][j];
+        },
+        isGameOver: function() {
+            return (isGridTraversalComplete === row*column);
+        },
+        removeFlag: removeFlag,
+        addFlag: addFlag,
+        revealGrid: revealGrid
+    };
+}
