@@ -7,7 +7,7 @@ const GridFilled = function () {
     /* position in grid to do dfs
        left, right,up, down */
     var pos = [[-1,0],[1,0],[0,-1],[0,1]];
-    var gameFactory = GridFilling();
+    const gameFactory = GridFilling();
     function create(rows,columns,levels,mines=0) {
         row=rows;
         column=columns;

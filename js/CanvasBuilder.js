@@ -1,7 +1,7 @@
 
 const CanvasBuilder = function() {
     var canvas = document.getElementById("canvas");
-    
+    var maxWidth = 500;
     var width = 20;
     var row,column,level,numberOfMines;
     var imgArray = new Array(13);
@@ -11,6 +11,9 @@ const CanvasBuilder = function() {
 
         row = rows;
         column = columns;
+        if(row*column <= 500) {
+            width = Math.min(Math.floor(maxWidth/column),Math.floor(maxWidth/row));
+        }
         level = levels;
         numberOfMines = mines;
         canvas.height =  row*width;
@@ -49,8 +52,6 @@ const CanvasBuilder = function() {
         myTimer = setInterval(timer.setTime,1000);
     }
     
-    
-
 
     function detectIsBomb(e) {
         context.fillStyle = "black";
@@ -96,6 +97,7 @@ const CanvasBuilder = function() {
     }
     function stopGame() {
         clearInterval(myTimer);
+        // need pop-up modal to close and return to form page
     }
 
     function flagAddOrRemove(e) {
@@ -118,7 +120,7 @@ const CanvasBuilder = function() {
             stopGame();
         }
     }
-    create(10,10,"custom",10);
+    create(5,5,"custom",10);
     return {
         createObject: create
     };
