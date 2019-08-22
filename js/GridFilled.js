@@ -4,7 +4,7 @@ const GridFilled = function () {
     var row,column,level,numberOfMines;
     var visited;
     var isGridTraversalComplete = 0;
-    /* position in grid to do bfs
+    /* position in grid to do dfs
        left, right,up, down */
     var pos = [[-1,0],[1,0],[0,-1],[0,1]];
     var gameFactory = GridFilling();
@@ -38,7 +38,7 @@ const GridFilled = function () {
         gameFactory.createObject(row,column,numberOfMines);
     }
     // used stack as order doesn't matter in this traversal
-    function bfs(i,j) {
+    function dfs(i,j) {
         var stack = [];
         var ans = [];
         stack.push([i,j]);
@@ -82,22 +82,10 @@ const GridFilled = function () {
         gridRevealed[i][j]=-1;
     }
     function revealGrid(i,j) {
-        const arr = bfs(i,j);
+        const arr = dfs(i,j);
         isGridTraversalComplete += arr.length; 
         return arr;
     }
-    // for(var i=0;i<row;i++) {
-    // var flag = false;
-    // for(var j=0;j<column;j++) {
-    //     if(gameFactory.getGridAtIndex(i,j) === 0)
-    //      {
-    //          flag=true;
-    //          bfs(i,j);
-    //          break;
-    //      }
-    // }
-    // if(flag) break;
-    // }
     return {
         createObject: create,
         getRow: function() {
