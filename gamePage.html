@@ -25,22 +25,44 @@
 		}
       	#canvas {
 		}
+		.modal {
+			color: black;	
+		}
 	</style>
 </head>
-<body>
+<body onload="startGame()">
 	<h1>Minesweeper Game</h1>
 	<div id="timer">
 		<p>	
 		<label id="minutes">00</label>:<label id="seconds">00</label>
 		</p>
 	</div>
+	<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Result</h4>
+				</div>
+				<div class="modal-body">
+					<p></p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+		
 	<canvas id="canvas"></canvas>
 	<script type="text/javascript" src="js/Factory.js"></script>
 	<script type="text/javascript" src="js/RandomGenerator.js"></script>
-	<script type="text/javascript" src="js/GridFilling.js"></script>
 	<script type="text/javascript" src="js/GridFilled.js"></script>
+	<script type="text/javascript" src="js/GridFilling.js"></script>
 	<script type="text/javascript" src="js/Timer.js"></script>
 	<script type="text/javascript" src="js/CanvasBuilder.js	"></script>
+	<script type="text/javascript" src="main.js"></script>
 	<script type="text/javascript">
 	</script>
 	

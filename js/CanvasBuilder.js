@@ -7,8 +7,10 @@ const CanvasBuilder = function() {
     var imgArray = new Array(13);
     var gameBegin;
     var context, myTimer;
+    var instance;
     function create(rows,columns,levels,mines=0) {
-
+        if(instance==1) return;
+        instance=1;
         row = rows;
         column = columns;
         if(row*column <= 500) {
@@ -98,6 +100,7 @@ const CanvasBuilder = function() {
     function stopGame() {
         clearInterval(myTimer);
         // need pop-up modal to close and return to form page
+        $("#myModal").modal();
     }
 
     function flagAddOrRemove(e) {
@@ -120,9 +123,7 @@ const CanvasBuilder = function() {
             stopGame();
         }
     }
-    create(5,5,"custom",10);
     return {
         createObject: create
     };
 }
-CanvasBuilder();
