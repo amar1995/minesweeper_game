@@ -72,7 +72,7 @@ const GridFilling = function() {
                 }
             }
         }
-        print();
+        // print();
     }
     /* grid will be private we can only get value at index */
     function getGridAtIndex(i,j) {

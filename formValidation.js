@@ -5,6 +5,7 @@ function isCustom() {
         mine.disabled = false;  
     } else {
         mine.disabled = true;
+        mine.value=0;
     }
 }
 function isRowValid() {
@@ -39,9 +40,10 @@ function isFormValid() {
         alert("mines should be atleast 1");
         return false;
         }
-        if(r*c < m) 
-        alert("Mines should be less than row*column" + r*c );
-        return false;
+        if(r*c < m) {
+            alert("Mines should be less than row*column" + r*c );
+            return false;
+        }
     } 
     if(levels.value === "Easy") {
         localStorage.setItem("row",r);

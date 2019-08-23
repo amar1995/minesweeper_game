@@ -59,7 +59,7 @@ const GridFilled = function () {
                 var m = y+pos[k][1];
                 if(l>=0 && l<row && m>=0 && m<column) {
                     // console.log([l,m,arr[l][m]])
-                    if(gameFactory.getGridAtIndex(l,m) !== -1) {  
+                    if(gameFactory.getGridAtIndex(l,m) !== -1 &&  gridRevealed[l][m] === -1) {  
                         if(visited[l][m] === false) {
                             visited[l][m]=true;
                             if(gameFactory.getGridAtIndex(l,m) === 0)
@@ -72,6 +72,16 @@ const GridFilled = function () {
             }
         }
         return ans;
+    }
+    function isGameWon() {
+        for(var i=0; i<row; i++) {
+            for(var j=0; j<column; j++) {
+                if(gridRevealed[i][j] === 9 && gameFactory.getGridAtIndex(i,j) !== -1) {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
     function addFlag(i,j) {
         isGridTraversalComplete += 1;
@@ -105,6 +115,7 @@ const GridFilled = function () {
         },
         removeFlag: removeFlag,
         addFlag: addFlag,
-        revealGrid: revealGrid
+        revealGrid: revealGrid,
+        isGameWon: isGameWon
     };
 }

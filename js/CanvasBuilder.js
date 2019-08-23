@@ -8,6 +8,7 @@ const CanvasBuilder = function() {
     var gameBegin;
     var context, myTimer;
     var instance;
+    var won=true;
     function create(rows,columns,levels,mines=0) {
         if(instance==1) return;
         instance=1;
@@ -56,11 +57,10 @@ const CanvasBuilder = function() {
     
 
     function detectIsBomb(e) {
-        context.fillStyle = "black";
         var j = Math.floor(e.offsetX / width),
         i = Math.floor(e.offsetY / width);
         // console.log([i,j,gameBegin.getValueOfOriginalGrid(i,j)]);
-        if(gameBegin.getValueOfOriginalGrid(i,j) !== -1) {
+        if(gameBegin.getValueOfOriginalGrid(i,j) !== -1 && gameBegin.getValueOfSeenGrid(i,j) === -1) {
             const traveGrid = gameBegin.revealGrid(i,j);
             for(var k=0;k<traveGrid.length;k++) {
                 var val = gameBegin.getValueOfOriginalGrid(traveGrid[k][0],traveGrid[k][1]);
@@ -69,8 +69,9 @@ const CanvasBuilder = function() {
                 context.stroke();
                 context.drawImage(imgArray[val],traveGrid[k][1]*width,traveGrid[k][0]*width,width,width);
             }
-        } else {
+        } else if(gameBegin.getValueOfOriginalGrid(i,j) === -1) {
             /* Game Over */
+            won = false;
             revealGridSolution();
         }
         if(gameBegin.isGameOver()) {
@@ -99,6 +100,8 @@ const CanvasBuilder = function() {
     }
     function stopGame() {
         clearInterval(myTimer);
+        if(won === true) won = gameBegin.isGameWon(); 
+        localStorage.setItem("won",won);
         // need pop-up modal to close and return to form page
         $("#myModal").modal();
     }
