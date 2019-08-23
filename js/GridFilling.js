@@ -38,20 +38,10 @@ const GridFilling = function() {
         var mines = numberOfMines;
         var remainingCells = row*column;
         var chances;
-        for( var i=0; i<row; i++) {
-            for( var j=0; j<column; j++) {
-                chances = mines/remainingCells;
-                if(Math.random() < chances) {
-                    factory.updateGrid(i,j,-1);
-                    mines-=1;
-                    remainingCells-=1;
-                }
-                if(mines === 0) 
-                    break;
-            }
-            if(mines === 0) break;
-        }
-        console.log(mines);
+        const randomGenerator = RandomGenerator();
+        const minesIndex = randomGenerator.getInstance(row,column,mines);
+        for(var i=0; i<minesIndex.length; i++) 
+            factory.updateGrid(minesIndex[i][0],minesIndex[i][1],-1);
         if(flag) {
             for( var i=0; i<row; i++) {
                 for( var j=0; j<column; j++) {

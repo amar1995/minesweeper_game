@@ -31,9 +31,9 @@ const GridFilled = function () {
         if(level === "easy")
         gameFactory.createObject(row,column,Math.max(row,column));
         else if(level === "medium")
-        gameFactory.createObject(row,column,Math.floor((row*column)/2));
+        gameFactory.createObject(row,column,Math.floor((row*column)/4));
         else if(level === "hard")
-        gameFactory.createObject(row,column,Math.ceil((row*column)/2) + Math.max(row,column));
+        gameFactory.createObject(row,column,Math.ceil((row*column)/2));
         else if(level === "custom")
         gameFactory.createObject(row,column,numberOfMines);
     }
