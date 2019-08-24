@@ -4,9 +4,14 @@ Design pattern used are modular pattern, singleton pattern.<br>
 Algorithm used dfs for traversal.<br>
 Data-Structure used stack.<br>
 
+
+# Prerequisite
+1. Your local system must have node installed
+
 # Running instruction
 Step1: Clone repository in your local environment.<br>
-Step2: Run home.html file in chorme or mozilla.
+Step2: Run npm install. <br>
+Step3: Run npm start to launch the application.
 
 # Limitation
 1. Only Work in pc
