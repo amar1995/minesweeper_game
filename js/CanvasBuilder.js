@@ -10,8 +10,6 @@ const CanvasBuilder = function() {
     var instance;
     var won=true;
     function create(rows,columns,levels,mines=0) {
-        if(instance==1) return;
-        instance=1;
         row = rows;
         column = columns;
         if(row*column <= 500) {
@@ -127,6 +125,11 @@ const CanvasBuilder = function() {
         }
     }
     return {
-        createObject: create
+        createObject: function(row,column,level,mines) {
+            if(!instance) {
+                create(row,column,level,mines);
+            }
+            instance=1;
+        }
     };
 }
