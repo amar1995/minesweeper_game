@@ -3,7 +3,7 @@
 $('#myModal').on('hidden.bs.modal', function () {
     // do something…
     console.log("closed");
-    window.location.href = "home.html";
+    window.location.href = "/";
 });
 $( "#myModal" ).on('shown.bs.modal', function(){
     const val = localStorage.getItem("won");

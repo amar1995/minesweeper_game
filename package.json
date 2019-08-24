@@ -1,0 +1,31 @@
+{
+  "name": "minesweeper50",
+  "version": "1.0.0",
+  "description": "A pc based minesweeper game",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amar1995/minesweeper_game.git"
+  },
+  "keywords": [
+    "javascript",
+    "oop",
+    "algorithm",
+    "data-structure",
+    "canvas",
+    "node"
+  ],
+  "author": "Amar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amar1995/minesweeper_game/issues"
+  },
+  "homepage": "https://github.com/amar1995/minesweeper_game#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1"
+  }
+}
