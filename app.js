@@ -7,7 +7,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 const Router = express.Router();
-
+const port = process.env.PORT || 8080;
 app.use('/js', express.static(path.join(__dirname+'/js')));
 app.use('/images', express.static(path.join(__dirname+'/images')));
 app.use('/',express.static(path.join(__dirname+'/')));
@@ -21,4 +21,4 @@ app.post('/',(req,res) => {
     res.sendFile(path.join(__dirname+'/gamePage.html'));
 });
 
-app.listen(8080);
+app.listen(port);
