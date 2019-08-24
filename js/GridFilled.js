@@ -4,6 +4,7 @@ const GridFilled = function () {
     var row,column,level,numberOfMines;
     var visited;
     var isGridTraversalComplete = 0;
+    var nonMinesGridSize = 0;
     /* position in grid to do dfs
        left, right,up, down */
     var pos = [[-1,0],[1,0],[0,-1],[0,1]];
@@ -28,14 +29,24 @@ const GridFilled = function () {
         }
     }
     function makeGrid() {
-        if(level === "easy")
-        gameFactory.createObject(row,column,Math.max(row,column));
-        else if(level === "medium")
-        gameFactory.createObject(row,column,Math.floor((row*column)/4));
-        else if(level === "hard")
-        gameFactory.createObject(row,column,Math.ceil((row*column)/2));
-        else if(level === "custom")
-        gameFactory.createObject(row,column,numberOfMines);
+        if(level === "easy") {
+            gameFactory.createObject(row,column,Math.max(row,column));
+            nonMinesGridSize = (row*column)-row;
+            // console.log(mines);
+        }
+        else if(level === "medium") {
+            gameFactory.createObject(row,column,Math.floor((row*column)/4));
+            nonMinesGridSize = (row*column)-Math.floor(((row*column)/4));
+            // console.log(mines);
+        }
+        else if(level === "hard") {
+            gameFactory.createObject(row,column,Math.floor((row*column)/2));
+            nonMinesGridSize = row*column-Math.floor((row*column)/2);
+        }   
+        else if(level === "custom") {
+            gameFactory.createObject(row,column,numberOfMines);
+            nonMinesGridSize = row*column - numberOfMines;
+        }
     }
     // used stack as order doesn't matter in this traversal
     function dfs(i,j) {
@@ -73,6 +84,10 @@ const GridFilled = function () {
         }
         return ans;
     }
+    function isGameCompleted() {
+        console.log(nonMinesGridSize);
+        if(nonMinesGridSize === 0) return true;
+    }
     function isGameWon() {
         for(var i=0; i<row; i++) {
             for(var j=0; j<column; j++) {
@@ -94,6 +109,7 @@ const GridFilled = function () {
     function revealGrid(i,j) {
         const arr = dfs(i,j);
         isGridTraversalComplete += arr.length; 
+        nonMinesGridSize -= arr.length;
         return arr;
     }
     return {
@@ -116,6 +132,7 @@ const GridFilled = function () {
         removeFlag: removeFlag,
         addFlag: addFlag,
         revealGrid: revealGrid,
-        isGameWon: isGameWon
+        isGameWon: isGameWon,
+        isGameCompleted: isGameCompleted
     };
 }

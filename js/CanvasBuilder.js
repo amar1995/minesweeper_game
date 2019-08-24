@@ -9,6 +9,7 @@ const CanvasBuilder = function() {
     var context, myTimer;
     var instance;
     var won=true;
+    var completedWithoutFlag=false;
     function create(rows,columns,levels,mines=0) {
         row = rows;
         column = columns;
@@ -72,6 +73,10 @@ const CanvasBuilder = function() {
             won = false;
             revealGridSolution();
         }
+        if(gameBegin.isGameCompleted()) {
+            completedWithoutFlag=true;
+            stopGame();
+        }
         if(gameBegin.isGameOver()) {
             console.log("Completed");
             stopGame();
@@ -98,7 +103,9 @@ const CanvasBuilder = function() {
     }
     function stopGame() {
         clearInterval(myTimer);
-        if(won === true) won = gameBegin.isGameWon(); 
+        if(won === true) {
+            won = gameBegin.isGameWon() || completedWithoutFlag;
+        }
         localStorage.setItem("won",won);
         // need pop-up modal to close and return to form page
         $("#myModal").modal();
@@ -108,12 +115,13 @@ const CanvasBuilder = function() {
         e.preventDefault();
         var j = Math.floor(e.offsetX / width),
         i = Math.floor(e.offsetY / width);
+        
         if(gameBegin.getValueOfSeenGrid(i,j) === -1) {
             context.rect(j*width, i*width, width, width);
             context.stroke();
             context.drawImage(imgArray[9],j*width,i*width,width,width);
             gameBegin.addFlag(i,j);
-        } else {
+        } else if(gameBegin.getValueOfSeenGrid(i,j) === 9) {
             context.rect(j*width, i*width, width, width);
             context.stroke();
             context.drawImage(imgArray[11],j*width,i*width,width,width);
